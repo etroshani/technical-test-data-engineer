@@ -128,18 +128,6 @@ class RetrieveData:
 
         if has_none_values(history_items):
             raise ValueError("listen_history dataset contains None values")
-        
-        
-        """
-        tracks_items =tracks.get("items")
-        users_items = users.get("items")
-        history_items = listen_history.get("items")
-
-
-        # Si les datasets sont vides, on sort de la fonction
-        if tracks_items not in tracks or users_items not in users or history_items not in listen_history or history_items.get("items") not in history_items:
-            raise ValueError("datasets are empty")
-        """
 
         
         # Transformation et normalization des données des chansons
