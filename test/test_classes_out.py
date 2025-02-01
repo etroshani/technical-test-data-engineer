@@ -321,23 +321,9 @@ def test_retrieve_data_empty(mock_history, mock_users, mock_tracks):
     }
 
     data = RetrieveData("http://127.0.0.1:8000")
-    data.retrieve_data()
-
-    df = pd.read_csv('final_data.csv')
-    assert df.empty
-
-
-
-
-# Pour tester les cas où les données tirées du API n'ont pas de clés (dictionaire vide)
-@patch.object(RetrieveData, 'data_tracks')
-@patch.object(RetrieveData, 'data_users')
-@patch.object(RetrieveData, 'data_listen_history')
-def test_empty_keys(mock_history, mock_users, mock_tracks):
-    data = RetrieveData("http://127.0.0.1:8000")
-    with pytest.raises(KeyError):
+    
+    with pytest.raises(ValueError):
         data.retrieve_data()
-
 
 
 

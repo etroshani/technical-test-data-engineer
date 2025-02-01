@@ -112,14 +112,34 @@ class RetrieveData:
         users = self.data_users()
         listen_history = self.data_listen_history()
 
-        # Si les datasets sont vides, on sort de la fonction
-        if not tracks or not users or not listen_history or not listen_history.get("items") or not tracks.get("items") or not users.get("items"):
-            print("no data found")
-            return
+        tracks_items = tracks.get("items", [])
+        users_items = users.get("items", [])
+        history_items = listen_history.get("items", [])
+
+        # Fonction qui vérifie si la table contient seulement des None values
+        def has_none_values(items):
+            return any(value is None for item in items for value in item.values())
+
+        if has_none_values(tracks_items):
+            raise ValueError("tracks dataset contains None values")
+
+        if has_none_values(users_items):
+            raise ValueError("users dataset contains None values")
+
+        if has_none_values(history_items):
+            raise ValueError("listen_history dataset contains None values")
         
-        # Si la clé 'items' n'est pas présente dans l'une des sources de données, on soulève une erreur
-        if 'items' not in tracks or 'items' not in users or 'items' not in listen_history:
-            raise KeyError("missing key in response")
+        
+        """
+        tracks_items =tracks.get("items")
+        users_items = users.get("items")
+        history_items = listen_history.get("items")
+
+
+        # Si les datasets sont vides, on sort de la fonction
+        if tracks_items not in tracks or users_items not in users or history_items not in listen_history or history_items.get("items") not in history_items:
+            raise ValueError("datasets are empty")
+        """
 
         
         # Transformation et normalization des données des chansons
